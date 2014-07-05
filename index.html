@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>loader page</title>
+</head>
+<body>
+
+<button id="bumpUp">Bump Up Index</button>
+<button id="bumpDown">Bump Down Index</button>
+<button id="logIndex">logIndex</button>
+
+<div id="logger">
+
+</div>
+
+<script src="loader.js"></script>
+
+<script>
+    var d=document, dId = function(id){
+        return d.getElementById(id);
+    };
+
+    var mediator = {
+        onLoaded: function (resp) {
+            dId('logger').innerHTML +=resp;
+        }
+    };
+
+    loader.init(mediator);
+
+    var bumpUpIndex = mediator.bumpUpIndex;
+    var bumpDownIndex = mediator.bumpDownIndex;
+
+    dId('bumpUp').addEventListener('click', bumpUpIndex);
+    dId('bumpDown').addEventListener('click', bumpDownIndex);
+    dId('logIndex').addEventListener('click', loader.logIndex);
+
+
+
+
+</script>
+</body>
+</html>
