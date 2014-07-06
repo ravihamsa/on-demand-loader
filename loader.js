@@ -26,12 +26,12 @@
                 }
             }
         };
-        
+
         var head = document.getElementsByTagName('head')[0];
         head.appendChild( script );
     }
     var getDataJSONP = function(url, callback){
-        var uniqueName =   "callback_json" + (++JSONPCounter);
+        var uniqueName =   'hbcb';
         window[ uniqueName ] = function(data){
             callback(data);
         }
@@ -40,7 +40,7 @@
 
     var count = 10, currentIndex = 0, loadedIndex = 0, threshold = 5, onLoaded = function () {},
         getUrl = function () {
-            return 'data/data-' + loadedIndex + '-' + (loadedIndex + count) + '.json'
+            return '/appdata?start='+(loadedIndex+1)+'&count='+count
         },
         loadNextData = function () {
             getDataJSONP(getUrl(), function(resp){

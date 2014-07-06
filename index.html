@@ -23,7 +23,7 @@
 
     var mediator = {
         onLoaded: function (resp) {
-            dId('logger').innerHTML +=resp;
+            dId('logger').innerHTML +=JSON.stringify(resp);
         }
     };
 

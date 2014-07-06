@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+        body, html {
+            padding: 0;
+            margin: 0;
+        }
+
+        body, html {
+            width: 320px;
+            height: 580px;
+        }
+
+        .cards {
+            height: 100%;
+            width: 100%;
+            position: relative;
+
+        }
+
+        .card {
+            width: 320px;
+            height: 300px;
+
+            position: absolute;
+        }
+
+        .card.top-stack {
+            width: 320px;
+            height: 300px;
+            top: 0;
+            left: 0;
+            background-color: red;
+            -webkit-transform: scale(1);
+        }
+
+        .card.bottom-stack {
+            -webkit-transform: scale(0.8);
+            top: 300px;
+            background-color: yellow;
+        }
+
+        .card.active {
+            z-index: 200;
+        }
+
+        .card.animate{
+            transition: all 500ms ease-in-out;
+
+        }
+
+        .card.animate.active {
+            z-index: 300;
+        }
+
+        .card.bottom-active {
+            z-index: 100;
+        }
+
+        .card {
+
+            border: 1px solid #fff;
+        }
+    </style>
+</head>
+<body>
+
+<button id="nextBut">next</button>
+<button id="prevBut">prev</button>
+
+
+<div class="cards">
+    <div class="card bottom-stack">
+        card1
+    </div>
+    <div class="card bottom-stack">
+        card2
+    </div>
+    <div class="card bottom-stack">
+        card3
+    </div>
+    <div class="card bottom-stack">
+        card4 bottom-stack
+    </div>
+    <div class="card bottom-stack">
+        card5 bottom-stack
+    </div>
+    <div class="card bottom-stack">
+        card6 bottom-stack
+    </div>
+    <div class="card bottom-stack">
+        card7 bottom-stack
+    </div>
+    <div class="card bottom-stack">
+        card8 bottom-stack
+    </div>
+    <div class="card bottom-stack">
+        card9 bottom-stack
+    </div>
+    <div class="card bottom-stack">
+        card10 bottom-stack
+    </div>
+    <div class="card bottom-stack">
+        card11 bottom-stack
+    </div>
+    <div class="card bottom-stack">
+        card12 bottom-stack
+    </div>
+    <div class="card bottom-stack">
+        card13
+    </div>
+</div>
+
+
+<script>
+    var d = document, dId = function (id) {
+        return d.getElementById(id);
+    };
+
+    function addClass(node, className) {
+        if (!node.length) node = [node];
+        for (var n = 0, m = node.length; n < m; n++) {
+
+        }
+    }
+
+    dCn = function (cName) {
+        return d.getElementsByClassName(cName);
+    }
+
+    var curIndex = 0;
+    var curCard = null;
+    var curBottomCard = null;
+
+
+    var cards = dCn('card'), len = cards.length;
+
+    for (var i = 0; i < len; i++) {
+        cards[i].classList.add('cards-' + i);
+    }
+
+    var nextSlide = function () {
+
+        curIndex++;
+        if(curIndex >= len){
+            curIndex = 0;
+        }
+        renderCard(curIndex);
+    }
+
+    var prevSlide = function () {
+        curIndex--;
+        if(curIndex < 1){
+            curIndex = len-1;
+        }
+        renderCard(curIndex, true);
+    }
+
+    var renderCard = function(index, isPrev){
+        if(curCard){
+            curCard.classList.remove('active');
+            curCard.classList.remove('animate');
+        }
+
+        if(curBottomCard){
+            curBottomCard.classList.remove('bottom-active');
+            curCard.classList.remove('animate');
+        }
+
+
+
+        var toShowCard = cards[index];
+        var nextCard = cards[index + 1];
+        if(!nextCard){
+            nextCard = cards[0];
+        }
+        toShowCard.classList.add('active');
+        toShowCard.classList.remove('bottom-stack');
+        toShowCard.classList.add('top-stack');
+
+
+        nextCard.classList.remove('top-stack');
+        nextCard.classList.add('bottom-active');
+        nextCard.classList.add('bottom-stack');
+        if(isPrev){
+            nextCard.classList.add('animate');
+        }else{
+            toShowCard.classList.add('animate');
+        }
+        curCard = toShowCard;
+        curBottomCard = nextCard;
+
+    }
+
+    renderCard(curIndex);
+
+
+    dId('nextBut').addEventListener('click', nextSlide)
+    dId('prevBut').addEventListener('click', prevSlide)
+</script>
+</body>
+</html>
