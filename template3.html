@@ -186,6 +186,7 @@
 </div>
 
 <script src="loader.js"></script>
+<script src="toucher.js"></script>
 <script>
     var d = document, dId = function (id) {
         return d.getElementById(id);
@@ -209,6 +210,7 @@
     }
 
     var curIndex = 0;
+    var bodyEl = d.body;
     var cards = dCn('card');
     var cardsCount = cards.length;
     var appInit = false;
@@ -353,8 +355,13 @@
 
     }
 
-    dId('nextBut').addEventListener('click', nextSlide);
-    dId('prevBut').addEventListener('click', prevSlide);
+    bodyEl.addEventListener('swipeleft', flipLeft);
+    bodyEl.addEventListener('swiperight', flipRight);
+    bodyEl.addEventListener('swipeup', nextSlide);
+    bodyEl.addEventListener('swipedown', prevSlide);
+
+    dId('nextBut').addEventListener('click', prevSlide);
+    dId('prevBut').addEventListener('click', nextSlide);
     dId('flipLeftBut').addEventListener('click', flipLeft);
     dId('flipRightBut').addEventListener('click', flipRight);
 
@@ -371,6 +378,8 @@
 
     bumpUpIndex = mediator.bumpUpIndex;
     bumpDownIndex = mediator.bumpDownIndex;
+
+
 
 
 </script>
