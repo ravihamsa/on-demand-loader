@@ -1,4 +1,5 @@
 (function (root) {
+    /*
     var JSONPCounter = 0;
     var getData = function (url, callback) {
         var xmlHTTP = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("MicrosoftXMLHTTP");
@@ -10,7 +11,7 @@
         xmlHTTP.open("GET", url, true);
         xmlHTTP.send();
     }
-
+    */
     var loadJSONP = function(url){
         var script = document.createElement('script'),
             done = false;

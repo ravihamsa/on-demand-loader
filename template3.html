@@ -21,7 +21,6 @@
             width: 100%;
             position: relative;
 
-
         }
 
         .card {
@@ -29,35 +28,31 @@
             height: 300px;
             position: absolute;
             display: none;
-            background-color: red;
-            border: 2px solid #fff;
-            box-sizing: border-box;
-            z-index:2;
         }
 
         .top-stack {
-            top:0;
-            left:0;
+            top: 0;
+            left: 0;
             display: block;
         }
 
         .top-stack.behind {
-            z-index:3;
+            z-index: 3;
         }
 
         .top-stack.front {
-            z-index:4;
+            z-index: 4;
         }
 
-
-        .bottom-stack{
-            top:300px;
-            left:0;
+        .bottom-stack {
+            top: 300px;
+            left: 0;
             display: block;
             -webkit-transform: scale(0.8);
         }
+
         .bottom-stack.behind {
-            z-index:1;
+            z-index: 1;
         }
 
         .bottom-stack.front {
@@ -73,29 +68,83 @@
         }
 
         .prevAnimate .bottom-stack.behind {
-            z-index:3;
+            z-index: 3;
         }
 
         .prevAnimate .bottom-stack.front {
             z-index: 4;
         }
 
-
-
-
-        .card.animate{
-            transition: all 500ms ease-in-out;
+        .card.animate {
+            transform-style: preserve-3d;
             transition-property: -webkit-transform, top, left;
+            transition-duration: 300ms;
+            -webkit-transform-origin: center center;
+        }
+
+
+        .flipper.animate {
+            transform-style: preserve-3d;
+            transition-property: -webkit-transform;
+            transition-duration: 300ms;
+            -webkit-transform-origin: center center;
+        }
+
+        .card .face {
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .card .front {
+            background: red;
+        }
+        .card .back {
+            background: blue;
+            -webkit-transform: rotateY(180deg );
+        }
+
+        .card .back .dark {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            opacity: 0.3;
+        }
+
+        .card.flipped {
+            -webkit-transform:  rotateY(180deg );
+        }
+        .card.flipped2 {
+            -webkit-transform: rotateY(360deg );
+        }
+
+        .card.flip-mute {
+            -webkit-transform: rotateY(0deg );
+        }
+
+        .cards {
+            background-color: #a1a1a1;
+            -webkit-perspective: 800px;
+        }
+
+        .card .flipper {
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
 <button id="nextBut">next</button>
 <button id="prevBut">prev</button>
+<button id="flipLeftBut">FLip left</button>
+<button id="flipRightBut">FLip right</button>
 
 
 <div class="cards" id="cardsContainer">
-    <div class="card">
+    <!--<div class="card">
         card1
     </div>
     <div class="card">
@@ -133,10 +182,10 @@
     </div>
     <div class="card">
         card13
-    </div>
+    </div>-->
 </div>
 
-
+<script src="loader.js"></script>
 <script>
     var d = document, dId = function (id) {
         return d.getElementById(id);
@@ -150,6 +199,10 @@
         node.classList.remove(className);
     }
 
+    function hasClass(node, className){
+        return node.classList.contains(className)
+    }
+
 
     var dCn = function (cName) {
         return d.getElementsByClassName(cName);
@@ -158,99 +211,167 @@
     var curIndex = 0;
     var cards = dCn('card');
     var cardsCount = cards.length;
+    var appInit = false;
 
+    var appDataCounter = 0;
+    var appDataIndex = {};
     var cardIndex = {};
 
-    for(var i=0; i<cardsCount; i++){
-        addClass(cards[i], 'card-'+i);
-    }
+    var bumpUpIndex, bumpDownIndex;
 
-    var getFourIndex = function(isPrev){
+
+    var getFourIndex = function (isPrev) {
         var topFront = curIndex;
-        var topBehind = curIndex -1;
-        var bottomFront = curIndex +1;
+        var topBehind = curIndex - 1;
+        var bottomFront = curIndex + 1;
         var bottomBehind = bottomFront + 1;
         var animate = topFront;
 
 
-        if(topBehind < 0){
-            topBehind = cardsCount -1;
+        if (topBehind < 0) {
+            topBehind = cardsCount - 1;
         }
 
-        if(bottomFront >= cardsCount-1){
+        if (bottomFront >= cardsCount - 1) {
             bottomFront %= (cardsCount);
         }
 
-        if(bottomBehind >= cardsCount-1){
+        if (bottomBehind >= cardsCount - 1) {
             bottomBehind %= (cardsCount);
         }
 
-        if(isPrev){
+        if (isPrev) {
             animate = bottomFront;
         }
         var toReturn = {
             'top-stack front': topFront,
-            'top-stack behind':topBehind,
+            'top-stack behind': topBehind,
             'bottom-stack front': bottomFront,
             'bottom-stack behind': bottomBehind,
-            'animate':animate
+            'animate': animate
         }
+
+        console.log(curIndex, toReturn);
 
         return toReturn;
     }
 
-    var cleanClasses = function(){
-        for(var classNames in cardIndex){
+    var cleanClasses = function () {
+        for (var classNames in cardIndex) {
             var currentCard = cardIndex[classNames];
             var classNameArray = classNames.split(' ');
-            for(var className in classNameArray){
+            for (var className in classNameArray) {
                 removeClass(currentCard, classNameArray[className]);
             }
         }
     }
 
-    var initCards = function(isPrev){
+    var addAppData = function (myApps) {
+        if (myApps.length) {
+            var html = [];
+            for (var i = 0, len = myApps.length; i < len; i++) {
+                html.push('<div class="card card-' + appDataCounter + '"> <div class="flipper animate"> <div class="face front">front</div>  <div class="face back"> <div class="dark"></div>back </div> </div> </div>');
+                appDataIndex[appDataCounter++] = myApps[i];
+            }
+
+            var dummyDiv = d.createElement('div');
+            dummyDiv.innerHTML = html.join('');
+            dId('cardsContainer').appendChild(dummyDiv);
+            cards = dCn('card');
+            cardsCount = cards.length;
+        }
+
+    }
+
+    var initCards = function (isPrev) {
         cleanClasses();
         var fourIndex = getFourIndex(isPrev);
         var cardsContainer = dId('cardsContainer');
-        if(isPrev){
+        if (isPrev) {
             addClass(cardsContainer, 'prevAnimate');
-        }else{
+        } else {
             removeClass(cardsContainer, 'prevAnimate');
         }
-        for(var classNames in fourIndex){
-            var currentCard = cards[fourIndex[classNames]];
-            cardIndex[classNames] =  currentCard;
+        for (var classNames in fourIndex) {
+            var curIndex = fourIndex[classNames];
+            var currentCard = cards[curIndex];
+            cardIndex[classNames] = currentCard;
             var classNameArray = classNames.split(' ');
-            for(var index in classNameArray){
+            var appData = appDataIndex[curIndex];
+
+            if (appData && !appData.imageLoaded) {
+                var front =  currentCard.querySelector('.face');
+                var back =  currentCard.querySelector('.back');
+                front.style.background = '#fff url(' + appData.background_images[0] + ')';
+                back.style.background = '#fff url(' + appData.background_images[0] + ')';
+                appData.imageLoaded = true;
+            }
+
+            for (var index in classNameArray) {
                 var className = classNameArray[index];
                 addClass(currentCard, className);
             }
         }
     }
 
-    var nextSlide = function(){
+    var nextSlide = function () {
         curIndex++;
-        if(curIndex >= cardsCount-1){
+        if (curIndex >= cardsCount) {
             curIndex = 0;
         }
+        bumpUpIndex();
         initCards();
     }
 
-    var prevSlide = function(){
+    var prevSlide = function () {
         curIndex--;
-        if(curIndex<0){
+        if (curIndex < 0) {
             curIndex = cardsCount - 1;
         }
+        bumpDownIndex();
         initCards(true);
     }
 
-    dId('nextBut').addEventListener('click', nextSlide)
-    dId('prevBut').addEventListener('click', prevSlide)
 
+    var flipRight = function(){
+        flipCard(180);
+    }
 
+    var flipLeft = function(){
+        flipCard(-180);
+    }
 
-    initCards();
+    var flipCard = function(changeDeg){
+
+        var appData = appDataIndex[curIndex];
+        appData.rotationY = appData.rotationY || 0;
+        appData.rotationY+=changeDeg;
+        var curCard = (cardIndex['top-stack front']);
+        var flipper = curCard.querySelector('.flipper');
+        flipper.style.WebkitTransform = 'rotateY('+appData.rotationY+'deg)'
+        //var cssRule = document.styleSheets[0].addRule('.card-'+curIndex, '-webkit-transform: rotateY('+appData.rotationY+'deg );');
+
+    }
+
+    dId('nextBut').addEventListener('click', nextSlide);
+    dId('prevBut').addEventListener('click', prevSlide);
+    dId('flipLeftBut').addEventListener('click', flipLeft);
+    dId('flipRightBut').addEventListener('click', flipRight);
+
+    //loader implementation
+    var mediator = {
+        onLoaded: function (resp) {
+            addAppData(resp.myapps);
+            initCards();
+            //debugger;
+        }
+    };
+
+    loader.init(mediator);
+
+    bumpUpIndex = mediator.bumpUpIndex;
+    bumpDownIndex = mediator.bumpDownIndex;
+
 
 </script>
 </body>
