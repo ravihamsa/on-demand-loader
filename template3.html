@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+
+        body, html {
+            padding: 0;
+            margin: 0;
+        }
+
+        body, html {
+            width: 320px;
+            height: 580px;
+        }
+
+        .cards {
+            height: 100%;
+            width: 100%;
+            position: relative;
+
+
+        }
+
+        .card {
+            width: 320px;
+            height: 300px;
+            position: absolute;
+            display: none;
+            background-color: red;
+            border: 2px solid #fff;
+            box-sizing: border-box;
+            z-index:2;
+        }
+
+        .top-stack {
+            top:0;
+            left:0;
+            display: block;
+        }
+
+        .top-stack.behind {
+            z-index:3;
+        }
+
+        .top-stack.front {
+            z-index:4;
+        }
+
+
+        .bottom-stack{
+            top:300px;
+            left:0;
+            display: block;
+            -webkit-transform: scale(0.8);
+        }
+        .bottom-stack.behind {
+            z-index:1;
+        }
+
+        .bottom-stack.front {
+            z-index: 2;
+        }
+
+        .prevAnimate .top-stack.behind {
+            z-index: 1;
+        }
+
+        .prevAnimate .top-stack.front {
+            z-index: 2;
+        }
+
+        .prevAnimate .bottom-stack.behind {
+            z-index:3;
+        }
+
+        .prevAnimate .bottom-stack.front {
+            z-index: 4;
+        }
+
+
+
+
+        .card.animate{
+            transition: all 500ms ease-in-out;
+            transition-property: -webkit-transform, top, left;
+        }
+    </style>
+</head>
+<body>
+<button id="nextBut">next</button>
+<button id="prevBut">prev</button>
+
+
+<div class="cards" id="cardsContainer">
+    <div class="card">
+        card1
+    </div>
+    <div class="card">
+        card2
+    </div>
+    <div class="card">
+        card3
+    </div>
+    <div class="card">
+        card4 bottom-stack
+    </div>
+    <div class="card">
+        card5 bottom-stack
+    </div>
+    <div class="card">
+        card6 bottom-stack
+    </div>
+    <div class="card">
+        card7 bottom-stack
+    </div>
+    <div class="card">
+        card8 bottom-stack
+    </div>
+    <div class="card">
+        card9 bottom-stack
+    </div>
+    <div class="card">
+        card10 bottom-stack
+    </div>
+    <div class="card">
+        card11 bottom-stack
+    </div>
+    <div class="card">
+        card12 bottom-stack
+    </div>
+    <div class="card">
+        card13
+    </div>
+</div>
+
+
+<script>
+    var d = document, dId = function (id) {
+        return d.getElementById(id);
+    };
+
+    function addClass(node, className) {
+        node.classList.add(className);
+    }
+
+    function removeClass(node, className) {
+        node.classList.remove(className);
+    }
+
+
+    var dCn = function (cName) {
+        return d.getElementsByClassName(cName);
+    }
+
+    var curIndex = 0;
+    var cards = dCn('card');
+    var cardsCount = cards.length;
+
+    var cardIndex = {};
+
+    for(var i=0; i<cardsCount; i++){
+        addClass(cards[i], 'card-'+i);
+    }
+
+    var getFourIndex = function(isPrev){
+        var topFront = curIndex;
+        var topBehind = curIndex -1;
+        var bottomFront = curIndex +1;
+        var bottomBehind = bottomFront + 1;
+        var animate = topFront;
+
+
+        if(topBehind < 0){
+            topBehind = cardsCount -1;
+        }
+
+        if(bottomFront >= cardsCount-1){
+            bottomFront %= (cardsCount);
+        }
+
+        if(bottomBehind >= cardsCount-1){
+            bottomBehind %= (cardsCount);
+        }
+
+        if(isPrev){
+            animate = bottomFront;
+        }
+        var toReturn = {
+            'top-stack front': topFront,
+            'top-stack behind':topBehind,
+            'bottom-stack front': bottomFront,
+            'bottom-stack behind': bottomBehind,
+            'animate':animate
+        }
+
+        return toReturn;
+    }
+
+    var cleanClasses = function(){
+        for(var classNames in cardIndex){
+            var currentCard = cardIndex[classNames];
+            var classNameArray = classNames.split(' ');
+            for(var className in classNameArray){
+                removeClass(currentCard, classNameArray[className]);
+            }
+        }
+    }
+
+    var initCards = function(isPrev){
+        cleanClasses();
+        var fourIndex = getFourIndex(isPrev);
+        var cardsContainer = dId('cardsContainer');
+        if(isPrev){
+            addClass(cardsContainer, 'prevAnimate');
+        }else{
+            removeClass(cardsContainer, 'prevAnimate');
+        }
+        for(var classNames in fourIndex){
+            var currentCard = cards[fourIndex[classNames]];
+            cardIndex[classNames] =  currentCard;
+            var classNameArray = classNames.split(' ');
+            for(var index in classNameArray){
+                var className = classNameArray[index];
+                addClass(currentCard, className);
+            }
+        }
+    }
+
+    var nextSlide = function(){
+        curIndex++;
+        if(curIndex >= cardsCount-1){
+            curIndex = 0;
+        }
+        initCards();
+    }
+
+    var prevSlide = function(){
+        curIndex--;
+        if(curIndex<0){
+            curIndex = cardsCount - 1;
+        }
+        initCards(true);
+    }
+
+    dId('nextBut').addEventListener('click', nextSlide)
+    dId('prevBut').addEventListener('click', prevSlide)
+
+
+
+    initCards();
+
+</script>
+</body>
+</html>
