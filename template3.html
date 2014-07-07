@@ -28,6 +28,7 @@
             height: 300px;
             position: absolute;
             display: none;
+            -webkit-perspective: 1200px;
         }
 
         .top-stack {
@@ -87,7 +88,7 @@
             transform-style: preserve-3d;
             transition-property: -webkit-transform;
             transition-duration: 300ms;
-            -webkit-transform-origin: center center;
+            -webkit-transform-origin: right center;
         }
 
         .card .face {
@@ -127,7 +128,6 @@
 
         .cards {
             background-color: #a1a1a1;
-            -webkit-perspective: 800px;
         }
 
         .card .flipper {
@@ -312,7 +312,8 @@
         appData.rotationY+=changeDeg;
         var curCard = (cardIndex['top-stack front']);
         var flipper = curCard.querySelector('.flipper');
-        flipper.style.WebkitTransform = 'rotateY('+appData.rotationY+'deg)'
+        var translateXValue = appData.rotationY % 360 === 0 ? 0 : 100;
+        flipper.style.WebkitTransform = 'translateX(-'+translateXValue+'%) rotateY('+appData.rotationY+'deg)';
         //var cssRule = document.styleSheets[0].addRule('.card-'+curIndex, '-webkit-transform: rotateY('+appData.rotationY+'deg );');
 
     }
