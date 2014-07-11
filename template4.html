@@ -35,71 +35,50 @@ body, html {
     bottom: 0;
     left: 0;
     right: 0;
-    overflow: hidden;
+    -webkit-perspective:800px;
+    -webkit-perspective-origin: 50% 0%;
+    -webkit-transform-style:preserve-3d;
 }
 
 .card {
     width: 100%;
-    height: 54%;
+    height: 52.5%;
     position: absolute;
-    display: none;
     /*-webkit-perspective: 1200px;*/
 }
 
-.top-stack {
-    top: 0;
-    left: 0;
-    display: block;
-}
+
 
 .top-stack.behind {
-    z-index: 3;
-    -webkit-transform: translateZ(3px);
+    -webkit-transform:scale(1) translateY(0%) translateZ(3px);
 }
 
 .top-stack.front {
-    z-index: 4;
-    -webkit-transform: translateZ(4px);
-}
-
-.bottom-stack {
-    top: 54%;
-    left: 0;
-    display: block;
+    -webkit-transform:scale(1) translateY(0%) translateZ(4px);
 }
 
 .bottom-stack.behind {
-    z-index: 1;
-    -webkit-transform: translateZ(1px)  scale(0.8);
+    -webkit-transform: scale(0.8) translateY(125%) translateZ(1px);
 }
 
 .bottom-stack.front {
-    z-index: 2;
-    -webkit-transform: translateZ(2px)  scale(0.8);
+    -webkit-transform: scale(0.8) translateY(125%) translateZ(2px);
+
 }
 
-.prevAnimate .top-stack.behind {
-    z-index: 1;
+.bottom-stack.animate {
+    -webkit-transform: scale(0.8) translateY(125%) translateZ(10px);
 }
 
-.prevAnimate .top-stack.front {
-    z-index: 2;
+.top-stack.animate {
+    -webkit-transform:scale(1) translateY(0%) translateZ(10px);
 }
 
-.prevAnimate .bottom-stack.behind {
-    z-index: 3;
-}
-
-.prevAnimate .bottom-stack.front {
-    z-index: 4;
-}
 
 .card.animate {
     transform-style: preserve-3d;
-    transition-property: -webkit-transform, top, left;
+    transition-property: -webkit-transform;
     transition-duration: 300ms;
-    -webkit-transform-origin: center center;
-    -webkit-transform: translateZ(10);
 }
 
 .flipper.animate {
@@ -108,7 +87,6 @@ body, html {
     transition-duration: 700ms;
     transition-timing-function: ease-in-out;
     -webkit-transform-origin: center center;
-    -webkit-transform: translateZ(10);
 }
 
 .card .face {
@@ -117,23 +95,36 @@ body, html {
     width: 100%;
     height: 100%;
     -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     background: #a1a1a1 no-repeat top center;
     background-size: cover;
+    top:0;
+    left:0;
 
 }
 
 .card .front {
-    -webkit-transform: rotateY(0deg);
+    -webkit-transform: rotateY(360deg);
+
 }
 
 .card .back {
-    -webkit-transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg) translateZ(2px);
 }
 
 .card .flipper {
     width: 100%;
     height: 100%;
     -webkit-transform: rotateY(0deg);
+    -webkit-transform-style:preserve-3d;
+}
+
+.flipper.flipped1 {
+    -webkit-transform: rotateY(180deg);
+}
+
+.flipper.flipped2 {
+    -webkit-transform: rotateY(180deg);
 }
 
 .gradback {
@@ -167,6 +158,9 @@ body, html {
 
 }
 
+.bottomContainer div {
+    border: 1px solid #999999;
+}
 .flipper .name {
     font-size: 20px;
     margin-left: 15px;
@@ -218,14 +212,11 @@ body, html {
 }
 
 .flipper .smallImgCont {
-    bottom: 0px;
     margin-bottom: 15px;
     position: relative;
-    /* top: -6px; */
-    /* right: 7px; */
-    -webkit-transform: scale(.9);
-    float: left;
-    margin-left: 4px;
+    bottom:0;
+    left:0;
+    border:1px solid #999999;
 }
 
 .smallImg {
@@ -236,8 +227,9 @@ body, html {
     margin-right: 5px;
     background: transparent no-repeat top center;
     background-size: cover;
-    display: inline-block;
     border: 1px solid white;
+    display: inline-block;
+
 }
 
 .star {
@@ -259,6 +251,14 @@ body, html {
 .empty {
     background-position: 0 2px;
 }
+
+#logger {
+    position: absolute;
+    top:0;
+    left:0;
+}
+
+
 </style>
 </head>
 <body ontouchstart="preventDefault(event)">
@@ -273,6 +273,7 @@ body, html {
 <div class="cards" id="cardsContainer">
 
 </div>
+<div id='logger'></div>
 
 <script src="loader.js"></script>
 <script src="toucher.js"></script>
@@ -324,7 +325,12 @@ var dCn = function (cName) {
 
 var createCSSRule = function (selector, styleText) {
     var styleSheet = document.styleSheets[0];
-    styleSheet.addRule(selector, styleText);
+    if(styleSheet.addRule){
+        styleSheet.addRule(selector, styleText);
+    }else{
+        styleSheet.insertRule(selector + '{'+ styleText + '}', 0);
+    }
+
 }
 
 var curIndex = 0;
@@ -393,10 +399,17 @@ var addAppData = function (myApps) {
             html.push('<div class="card card-' + appDataCounter + '"> <div class="flipper animate"> <div class="face front"><div class="gradfront"></div> <div class="content"> </div> </div>  <div class="face back"> <div class="gradback"></div><div class="content"> </div> </div> </div> </div>');
             appDataIndex[appDataCounter++] = myApps[i];
         }
-
+        var cardContainer = dId('cardsContainer');
         var dummyDiv = d.createElement('div');
+        dummyDiv.classList.add('card-cont');
         dummyDiv.innerHTML = html.join('');
-        dId('cardsContainer').appendChild(dummyDiv);
+
+        while (dummyDiv.childNodes.length > 0) {
+            cardContainer.appendChild(dummyDiv.childNodes[0]);
+        }
+        //dId('cardsContainer').appendChild(dummyDiv.children);
+        //dummyDiv.remove();
+        console.log(dummyDiv.childElementCount, cardContainer.childElementCount);
         cards = dCn('card');
         cardsCount = cards.length;
     }
@@ -423,7 +436,7 @@ var initCards = function (isPrev) {
             var front = currentCard.querySelector('.face');
             var back = currentCard.querySelector('.back');
 
-
+            var bgImageString = appData.background_images[0];
             var item = appData;
             var ratingstar = '';
             var startype = 'full';
@@ -498,6 +511,11 @@ var flipCard = function (changeDeg) {
     var flipper = curCard.querySelector('.flipper');
     var translateXValue = appData.rotationY % 360 === 0 ? 0 : 100;
     flipper.style.WebkitTransform = 'rotateY(' + appData.rotationY + 'deg)';
+    dId('logger').innerHTML = appData.rotationY;
+    setTimeout(function(){
+        removeClass(flipper, 'animate');
+        flipper.style.webkitTransform = '';
+    },2000)
     //var cssRule = document.styleSheets[0].addRule('.card-'+curIndex, '-webkit-transform: rotateY('+appData.rotationY+'deg );');
 
 }
@@ -506,6 +524,11 @@ var handleTap = function (e) {
     var target = e.detail.target;
     //alert(target.classList);
     var currentCard = (cardIndex['top-stack front']);
+    var front = currentCard.querySelector('.face');
+    var back = currentCard.querySelector('.back');
+    var logger = dId('logger');
+    logger.innerHTML = target.classList + '---'+ e.detail.endTarget.classList;
+
     if (target.classList.contains('smallImg')) {
         //alert(2);
         if(!hasClass(target.parentNode.parentNode.parentNode.parentNode.parentNode, 'top-stack')){
@@ -513,8 +536,7 @@ var handleTap = function (e) {
         }
         //alert(3);
         var bgImageUrl = target.style.backgroundImage;
-        var front = currentCard.querySelector('.face');
-        var back = currentCard.querySelector('.back');
+
         removeCardClasses(front);
         removeCardClasses(back);
         var cardClass = getCardClass(target);
@@ -548,7 +570,6 @@ var mediator = {
     onLoaded: function (resp) {
         addAppData(resp.myapps);
         initCards();
-        //debugger;
     }
 };
 

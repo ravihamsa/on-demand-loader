@@ -1,0 +1,659 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta charset="UTF-8">
+<style type="text/css">
+body, #fullview{
+    color: #000000;
+    width:100%;
+    overflow: hidden;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    font-size: 12px;
+    background-color: #a1a1a1;
+    font-family:  "Helvetica Neue","HelveticaNeue-Light", "Helvetica Neue Light", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+}
+#fullview{
+    display: none;
+}
+#banner{
+    position: absolute;
+    width:316px;
+    height:46px;
+    /*background: #EBDA16;*/
+    border: 2px solid black;
+    font-size: 16px;
+    font-weight:bold;
+    color:black;
+    display: none;
+    text-align: center;
+}
+/* header*/
+#header{
+    width: 100%;
+    position: absolute;
+    top:0px;
+    height: 48px;
+    text-align: left;
+
+}
+#header div{
+    position: absolute;
+}
+#header .logo{
+    width: 24px;
+    height: 28px;
+    left: 3px;
+    top: 6px;
+    float: left;
+    background-image: url('http://dl.dropboxusercontent.com/u/11728525/cocaine/icons/new-inmobi-logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    -webkit-transform:scale(.8);
+}
+
+#header .category{
+    top: 15px;
+    left: 37px;
+    color: black;
+    font-size: 14px;
+}
+
+#header .close {
+    float: right;
+    -webkit-transform:scale(.8);
+    position: relative;
+    padding-right:10px;
+    padding-top: 10px;
+    opacity: .6;
+}
+
+
+
+.topContainer .install{
+    background-image: url("https://dl.dropboxusercontent.com/u/11728525/latestCocaine/icon-installer.png");
+    background-size: contain;
+    width: 10px;
+    height: 10px;
+    float: left;
+    background-repeat: no-repeat;
+    margin-top: 2px;
+    padding: 1px;
+    padding-right:2px ;
+}
+
+
+#deck_wrapper{
+    top:32px;
+    position: absolute;
+    width: 100%;
+    height: 91%;
+
+    background-color: #a1a1a1;
+    -webkit-transform: perspective( 600px );
+    perspective: 800px;
+
+
+
+}
+.dummy{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: translate3d(0px, 20px, 2px) scale(1);
+    background: #a1a1a1;
+}
+
+.topics{
+    padding-top: 10px;
+}
+.topics:nth-child(3){
+    padding-bottom: 20px;
+}
+
+/* header*/
+/*  front card*/
+
+#bottomdeck{
+    position: absolute;
+    width: 97%;
+    height:100%;
+    top:360px;
+    margin: 0px 5px;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: transform 1s;
+
+}
+.card{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    /*background-color:white;*/
+    -webkit-transform: translate3d(0px, 0px, 1px) scale(0.8);
+    background-color: rgba(0,0,0,0.8);
+
+
+}
+.card.quick{
+    -webkit-transition-duration: 0s;
+    transition-duration: 0s;
+
+
+}
+.flip-container{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    -webkit-perspective:1000;
+
+}
+.flipper{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all .8s ease-in-out;
+    -webkit-transform-style: preserve-3d;
+    -webkit-perspective: 1000;
+
+}
+
+/*new css*/
+.front{
+    width: 100%;
+    height: 100%;
+    -webkit-transform: rotateY(0deg);
+    -webkit-backface-visibility: hidden;
+    background-size: 100% 100%;
+    background-color: white;
+
+}
+.topContainer{
+    height: 10%;
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.topContainer:before{
+    content:' ';
+    position:absolute;
+    top:-11px;
+    left:0px;
+    z-index:10;
+    background:url("https://dl.dropboxusercontent.com/u/88546107/feather/image/misc/top-corner.png") left top;
+    width:90%;
+    height: 11px;
+
+}
+
+.topContainer:after{
+    content:' ';
+    position:absolute;
+    top:-11px;
+    right:0;
+    z-index:10;
+    background:url("https://dl.dropboxusercontent.com/u/88546107/feather/image/misc/top-corner.png") right top;
+    width:20%;
+    height: 11px;
+}
+
+
+.bottomContainer:before{
+    content:' ';
+    position:absolute;
+    bottom:-11px;
+    left:0px;
+    z-index:10;
+    background:url("https://dl.dropboxusercontent.com/u/88546107/feather/image/misc/bottom-corner.png") left top;
+    width:90%;
+    height: 11px;
+
+}
+
+.bottomContainer:after{
+    content:' ';
+    position:absolute;
+    bottom:-11px;
+    right:0;
+    z-index:10;
+    background:url("https://dl.dropboxusercontent.com/u/88546107/feather/image/misc/bottom-corner.png") right top;
+    width:20%;
+    height: 11px;
+}
+.topContainer .leftContainer{
+    /*float: left;*/
+    width: 100%;
+    position: absolute;
+}
+
+.topContainer .rightContainer{
+    float: right;
+    position: relative;
+    height: 100%;
+    padding-right: 10px;
+    margin-top: 14px;
+}
+.topContainer .category{
+    position: relative;
+    color: #666;
+    /* margin-top: 31px; */
+    font-size: 10px;
+    float: right;
+
+
+}
+
+
+
+
+
+.topContainer .appLogo{
+    width: 42px;
+    height: 42px;
+    background-size: 100% 100%;
+    display: inline-block;
+    margin-right: 7px;
+    float: left;
+}
+.topContainer .appName{
+    font-size: 17px;
+    position: relative;
+    top: -3px;
+}
+.topContainer .smallName{
+    font-size: 10px;
+    margin-top: -6px;
+    padding-bottom: 1px;
+    color: #999;
+}
+.topContainer .count{
+    font-size: 10px;
+    color: #999;
+}
+
+.flipper .info {
+    background-image: url("https://dl.dropboxusercontent.com/u/11728525/latestCocaine/icon-info.png");
+    width: 10px;
+    height: 10px;
+    background-size: 100% 100%;
+    padding: 3px;
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 3%;
+    /* margin-top: -3px; */
+    margin-bottom: 0px;
+    top: 92.7%;
+
+}
+.bottomContainer .tag{
+    position: absolute;
+    margin-left: 32px;
+    bottom: 15px;
+    font-size: 10px;
+    color: #666666;
+}
+
+
+.front .middleContainer{
+    width: 100%;
+    height: 65%;
+    background-size: 100% 100%;
+    -webkit-transition : all .3s ease-in-out;
+
+}
+
+.front .backGround_img{
+    width: 100%;
+    height: 100%;
+    -webkit-transition : all .3s ease-in-out;
+}
+.star {
+    color: #ddd;
+    font-size: 11px;
+    position: relative;
+}
+.star.full:before {
+
+    color: #e49f18;
+    content: '\2605'; /* Full star in UTF-8 */
+    position: absolute;
+    float: left;
+    left: 0;
+}
+.star.half:before {
+
+    color: #e49f18;
+    content: '\2605'; /* Full star in UTF-8 */
+    position: absolute;
+    left: 0;
+    width: 50%;
+    float: left;
+    overflow: hidden;
+}
+@-moz-document url-prefix() { /* Firefox Hack 😞 */
+    .star{
+        font-size: 50px;
+        line-height: 34px;
+    }
+}
+
+
+.front .bottomContainer {
+    width: 100%;
+    height: 15%;
+}
+.back{
+    position: absolute;
+    background-color: #ffffff;
+    width: 100%;
+    height: 100%;
+    -webkit-transform: rotateY(180deg);
+    -webkit-backface-visibility: hidden;
+    transform-style: preserve-3d;
+    top: 0;
+    color: #999;
+}
+.gradback{
+    width: 100%;
+    height: 100%;
+}
+
+
+.smallImgCont{
+    /* -webkit-transform: scale(.9); */
+    position: relative;
+    margin: 0px 0px 7px 5px;
+    float: left;
+    top: -44px;
+
+}
+.gradback .rating {
+    opacity: .8;
+    font-size: 12px;
+    color: #ffffff;
+}
+.gradback  .install{
+    position: relative;
+    bottom: 0px;
+    font-size: 10px;
+    color: #666666;
+
+}
+.flip-container .name{
+    font-size: 18px;
+    margin: 10px 10px 0px 10px;
+    color: #000000;
+
+}
+
+.flip-container .price{
+    /*background-image: url("https://dl.dropboxusercontent.com/u/11728525/latestCocaine/CTA.png");
+    background-size: 100% 100%;*/
+    background-repeat: no-repeat;
+    position: absolute;
+    /*    width: 27%;
+        height: 7%;*/
+    float: right;
+    right: 10px;
+    bottom: 4px;
+
+
+
+    background-color: #10b488;
+    border-radius: 6px;
+    border-width: 1px;
+    padding: 9px 0px 0px 13px;
+    box-shadow: 0 3px #026d50;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+    height: 26px;
+    width: 110px;
+    letter-spacing: 1.1px;
+
+
+}
+.flip-container .price button{
+
+}
+.flip-container .publisher{
+    font-size: 12px;
+    color: #ccc;
+    margin-left: 15px;
+    margin-bottom: 10px;
+}
+.flip-container .app_price{
+    font-size: 10px;
+    position: absolute;
+    right: 2px;
+    top: -15px;
+    color: #666666;
+
+}
+.flip-container .smallImgCont img{
+    width: 31px;
+    height: 31px;
+    margin-left: 5px;
+    /*border-radius: 4px;*/
+    margin-right: 5px;
+}
+.app_type{
+    position: absolute;
+    right: 15px;
+    /* height: 40px; */
+    top: 46px;
+    font-size: 11px;
+    color: #666666;
+}
+.back .mastersummary {
+    /*float: left;*/
+    position: relative;
+    overflow: hidden;
+
+}
+.back .mastersummary:after{
+    /*clear: both;*/
+
+}
+
+.mastersummary .publisher {
+    font-size: 10px;
+    color: #ccc;
+}
+.mastersummary  {
+    color: #ffffff;
+}
+
+.mastersummary .name {
+    margin-left: 0px;
+}
+.mastersummary .publisher {
+    margin-left: 0px;
+    margin-bottom: 5px;
+}
+.back img.icon-logo {
+    height: 12%;
+    margin: 10px 10px;
+    float: left;
+}
+.back .desc-title{
+    margin: 10px 0 5px 0px;
+    font-size: 15px;
+    color: #333;
+
+}
+.back .rating-title{
+    margin: 10px 0px 5px 0px;
+    font-size:13px;
+    color: #333;
+
+
+}
+.back .desc-body{
+    font-size: 12px;
+    color: #666666;
+
+    max-height: 29px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.back .love{
+    right: 0px;
+    top: 0px;
+    margin-right: 21px;
+    margin-top: 18px;
+    position: absolute;
+    /* bottom: 22px; */
+    /* left: 20px; */
+    width: 21px;
+    height: 23px;
+    /* padding: .83em; */
+    -webkit-transform: scale(.9);
+}
+.back .desc-container{
+    margin: 0px 10px;
+    float:left;
+}
+
+.rating_revire{
+    margin-top: 5px;
+    font-size: 10px;
+    color: #666666;
+}
+.review_content{
+    margin-top: 5px;
+    font-size:12px;
+    color: #666666;
+
+}
+
+
+.imgactive{
+    -webkit-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -webkit-transform: scale(1.2);
+
+}
+
+.opacityAnimateShow{
+    -webkit-transition: all 0.3s ease-in-out;
+    opacity: 1;
+}
+
+.opacityAnimateHide{
+    -webkit-transition: all 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.star {
+    /*background-image: url('http://dl.dropboxusercontent.com/u/11728525/cocaine/icons/new-star.png');*/
+    /*background-repeat: no-repeat; */
+    display: inline-block;
+}
+
+.full{
+    background-position: 0 -59px;
+}
+.half{
+    background-position: 0 -28px;
+}
+.empty{
+    background-position: 0 2px;
+}
+
+.smallImg{
+    border: 1px solid white;
+}
+
+.scalOpac{
+    -webkit-animation-duration: .5s;
+    -webkit-animation-name: anim;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-out;
+    /*-webkit-animation-fill-mode: forwards;*/
+
+}
+
+@-webkit-keyframes anim{
+
+    0%{
+        -webkit-transform :scale(1);
+        opacity: 1;
+
+    }
+
+    100%{
+        -webkit-transform :scale(1.5);
+        opacity: 0;
+    }
+
+}
+
+.shadow{
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    border-radius: 5px;
+
+}
+.shadow.one{
+    top: 65px;
+    background-color: #eee;
+    -webkit-transform: scale(0.65);
+
+}
+.shadow.two{
+
+    top: 76px;
+    background-color: #ddd;
+    -webkit-transform: scale(0.73);
+
+}
+
+
+
+
+
+
+
+
+</style>
+</head>
+<body >
+
+<!--div id='banner' ontouchend='expand()'>
+    Check Out The Coolest Apps
+</div-->
+<div style="display:none; position:absolute;" id="im_3432_clickTarget"></div>
+<div id='fullview' ontouchstart='preventDefault(event)'>
+    <!--HEADER-->
+    <div id='header'>
+        <div class="logo">
+        </div>
+
+        <div class="close" onclick='collapse()'>
+            <img src="http://dl.dropboxusercontent.com/u/11728525/cocaine/icons/new-close-button.png"/>
+        </div>
+    </div>
+
+    <!-- CARDS AREA-->
+    <div id="deck_wrapper">
+        <div id="bottomdeck">
+        </div>
+    </div>
+</div>
+
+
+<script src="test.js"></script>
+<script type="text/javascript"  src='http://inmobisdk-a.akamaihd.net/sdk/ios/mraid.js'></script>
+
+</body>
+</html>

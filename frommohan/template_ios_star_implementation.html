@@ -1,0 +1,1572 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta charset="UTF-8">
+    <style type="text/css">
+    body, #fullview{
+        color: #000000;
+        width:100%;
+        overflow: hidden;
+        height: 100%;
+        padding: 0px;
+        margin: 0px;
+        font-size: 12px;
+        background-color: #a1a1a1;
+        font-family:  "Helvetica Neue","HelveticaNeue-Light", "Helvetica Neue Light", Helvetica, Arial, "Lucida Grande", sans-serif;
+
+    }
+    #fullview{
+        display: none;
+    }
+    #banner{
+        position: absolute;
+        width:316px;
+        height:46px;
+        /*background: #EBDA16;*/
+        border: 2px solid black;
+        font-size: 16px;
+        font-weight:bold;
+        color:black;
+        display: none;
+        text-align: center;
+    }
+    /* header*/
+    #header{
+        width: 100%;
+        position: absolute;
+        top:0px;
+        height: 48px;
+        text-align: left;
+
+    }
+    #header div{
+        position: absolute;
+    }
+    #header .logo{
+        width: 24px;
+        height: 28px;
+        left: 3px;
+        top: 6px;
+        float: left;
+        background-image: url('http://dl.dropboxusercontent.com/u/11728525/cocaine/icons/new-inmobi-logo.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        -webkit-transform:scale(.8);
+    }
+
+    #header .category{
+        top: 15px;
+        left: 37px;
+        color: black;
+        font-size: 14px;
+    }
+
+    #header .close {
+        float: right;
+        -webkit-transform:scale(.8);
+        position: relative;
+        padding-right:10px;
+        padding-top: 10px;
+        opacity: .6;
+    }
+
+    .topContainer .install{
+        background-image: url("http://10.14.122.106/heisenberg/icon-installer.png");
+        background-size: contain;
+        width: 10px;
+        height: 10px;
+        float: left;
+        background-repeat: no-repeat;
+        margin-top: 2px;
+        padding: 1px;
+        padding-right:2px ;
+    }
+
+
+    #deck_wrapper{
+        top:32px;
+        position: absolute;
+        width: 100%;
+        height: 91%;
+
+        background-color: #a1a1a1;
+        -webkit-transform: perspective( 600px );
+        perspective: 800px;
+
+
+
+    }
+    .dummy{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-transform: translate3d(0px, 20px, 2px) scale(1);
+        background: #a1a1a1;
+    }
+
+    .topics{
+        padding-top: 10px;
+    }
+    .topics:nth-child(3){
+        padding-bottom: 20px;
+    }
+
+    /* header*/
+    /*  front card*/
+
+    #bottomdeck{
+        position: absolute;
+        width: 97%;
+        height:100%;
+        top:360px;
+        margin: 0px 5px;
+        -webkit-transform-style: preserve-3d;
+        -webkit-transition: transform 1s;
+
+    }
+    .card{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        -webkit-transition-duration: 0.4s;
+        transition-duration: 0.4s;
+        /*background-color:white;*/
+        -webkit-transform: translate3d(0px, 0px, 1px) scale(0.8);
+        background-color: rgba(0,0,0,0.8);
+
+
+    }
+    .card.quick{
+        -webkit-transition-duration: 0s;
+        transition-duration: 0s;
+
+
+    }
+    .flip-container{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        -webkit-perspective:1000;
+
+    }
+    .flipper{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        -webkit-transition: all .8s ease-in-out;
+        -webkit-transform-style: preserve-3d;
+        -webkit-perspective: 1000;
+
+    }
+
+    /*new css*/
+    .front{
+        width: 100%;
+        height: 100%;
+        -webkit-transform: rotateY(0deg);
+        -webkit-backface-visibility: hidden;
+        background-size: 100% 100%;
+        background-color: white;
+
+    }
+    .topContainer{
+        height: 10%;
+        margin-left: 10px;
+        padding-top: 10px;
+        padding-bottom: 20px;
+    }
+    .topContainer .leftContainer{
+      /*float: left;*/
+        width: 100%;
+        position: absolute;
+    }
+
+    .topContainer .rightContainer{
+        float: right;
+        position: relative;
+        height: 100%;
+        padding-right: 10px;
+        margin-top: 14px;
+    }
+    .topContainer .category{
+        position: relative;
+        color: #666;
+        /* margin-top: 31px; */
+        font-size: 10px;
+        float: right;
+
+
+    }
+
+
+
+
+    
+    .topContainer .appLogo{
+        width: 42px;
+        height: 42px;
+        background-size: 100% 100%;
+        display: inline-block;
+        margin-right: 7px;
+        float: left;
+    }
+    .topContainer .appName{
+     font-size: 17px;
+        position: relative;
+        top: -3px;
+    }
+    .topContainer .smallName{
+        font-size: 10px;
+        margin-top: -6px;
+        padding-bottom: 1px;
+        color: #999;
+    }
+    .topContainer .count{
+        font-size: 10px;
+        color: #999;
+    }
+
+    /*.topContainer .info {*/
+        /*background-image: url("http://10.14.122.106/heisenberg/icon-info.png");*/
+        /*width: 10px;*/
+        /*height: 10px;*/
+        /*background-size: 100% 100%;*/
+        /*padding: 3px;*/
+        /*background-repeat:no-repeat;*/
+        /*position:relative;*/
+        /*left: 40px;*/
+        /*margin-top: -3px;*/
+        /*margin-bottom:2px;*/
+
+    /*}*/
+    .bottomContainer .tag{
+        position: absolute;
+        padding-left: 10px;
+        bottom: 15px;
+        font-size: 10px;
+        color: #666666;
+    }
+
+
+    .front .middleContainer{
+        width: 100%;
+        height: 65%;
+        background-size: 100% 100%;
+        -webkit-transition : all .3s ease-in-out;
+
+    }
+
+    .front .backGround_img{
+     width: 100%;
+        height: 100%;
+        -webkit-transition : all .3s ease-in-out;
+    }
+    .star {
+        color: #ddd;
+        font-size: 11px;
+        position: relative;
+    }
+
+    .star .sel-star, .star .five-star{
+        position: relative;
+        top:0;
+        left:0;
+    }
+
+    .star .sel-star {
+        color: #e49f18;
+        overflow: hidden;
+        position: absolute;
+    }
+
+
+    @-moz-document url-prefix() { /* Firefox Hack 😞 */
+        .star{
+            font-size: 50px;
+            line-height: 34px;
+        }
+    }
+
+
+    .front .bottomContainer {
+        width: 100%;
+        height: 15%;
+    }
+    .back{
+        position: absolute;
+        background-color: #ffffff;
+        width: 100%;
+        height: 100%;
+        -webkit-transform: rotateY(180deg);
+        -webkit-backface-visibility: hidden;
+        transform-style: preserve-3d;
+        top: 0;
+        color: #999;
+    }
+    .gradback{
+        width: 100%;
+        height: 100%;
+    }
+    /*.gradfront{*/
+        /*width: 100%;*/
+        /*height: 100%;*/
+
+    /*}*/
+
+    /*.flip-container .name{*/
+        /*font-size: 18px;*/
+        /*margin: 10px 10px 0px 10px;*/
+        /*color: #000000;*/
+
+    /*}*/
+    /*.flip-container .publisher{*/
+        /*font-size: 12px;*/
+        /*color: #ccc;*/
+        /*margin-left: 15px;*/
+        /*margin-bottom: 10px;*/
+    /*}*/
+
+    /*.flip-container .rating{*/
+        /*opacity: .8;*/
+        /*font-size: 4px;*/
+        /*color: black;*/
+        /*-webkit-transform:scale(.8);*/
+        /*left: 7px;*/
+        /*position: relative;*/
+
+    /*}*/
+
+    /*.flip-container .rating_review{*/
+        /*position: absolute;*/
+        /*margin-right: 20px;*/
+        /*right: 0px;*/
+        /*top: 24px;*/
+        /*opacity: .8;*/
+        /*font-size: 12px;*/
+
+    /*}*/
+
+    /*.flip-container .price{*/
+        /*font-size: 11px;*/
+        /*padding-bottom: 8px;*/
+        /*padding-top: 8px;*/
+        /*border: 1px solid #fff;*/
+        /*border-radius: 3px;*/
+        /*position: absolute;*/
+        /*right: 20px;*/
+        /*bottom: 20px;*/
+        /*color: #fff;*/
+        /*font-weight: bold;*/
+        /*background-color: rgba(255, 255, 255, 0.2);*/
+        /*width: 57px;*/
+        /*color: black;*/
+        /*text-align: center;*/
+    /*}*/
+
+    /*.flip-container .app_price{*/
+
+        /*position: absolute;*/
+        /*right: 0px;*/
+        /*top: -10px;*/
+    /*}*/
+
+
+    .smallImgCont{
+        /* -webkit-transform: scale(.9); */
+        position: relative;
+        margin: 0px 0px 7px 5px;
+        float: left;
+        top: -44px;
+
+    }
+    .gradback .rating {
+        opacity: .8;
+        font-size: 12px;
+        color: #ffffff;
+    }
+    .gradback  .install{
+        position: relative;
+        bottom: 0px;
+        font-size: 10px;
+        color: #666666;
+
+    }
+    .flip-container .name{
+        font-size: 18px;
+        margin: 10px 10px 0px 10px;
+        color: #000000;
+
+    }
+
+    .flip-container .price{
+        background-image: url("http://10.14.122.106/heisenberg/CTA.png");
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        position: absolute;
+        width: 27%;
+        height: 7%;
+        float: right;
+        right: 10px;
+        bottom: 15px;
+
+    }
+    .flip-container .publisher{
+        font-size: 12px;
+        color: #ccc;
+        margin-left: 15px;
+        margin-bottom: 10px;
+    }
+    .flip-container .app_price{
+        font-size: 10px;
+        position: absolute;
+        right: 2px;
+        top: -15px;
+        color: #666666;
+
+    }
+    .flip-container .smallImgCont img{
+        width: 31px;
+        height: 31px;
+        margin-left: 5px;
+        border-radius: 4px;
+        margin-right: 5px;
+    }
+    .app_type{
+        position: absolute;
+        right: 15px;
+        /* height: 40px; */
+        top: 46px;
+        font-size: 11px;
+        color: #666666;
+    }
+    .back .mastersummary {
+        /*float: left;*/
+        position: relative;
+        overflow: hidden;
+
+    }
+    .back .mastersummary:after{
+        /*clear: both;*/
+
+    }
+
+    .mastersummary .publisher {
+        font-size: 10px;
+        color: #ccc;
+    }
+    .mastersummary  {
+        color: #ffffff;
+    }
+
+    .mastersummary .name {
+        margin-left: 0px;
+    }
+    .mastersummary .publisher {
+        margin-left: 0px;
+        margin-bottom: 5px;
+    }
+    .back img.icon-logo {
+        height: 12%;
+        margin: 10px 10px;
+        float: left;
+    }
+    .back .desc-title{
+        margin: 10px 0 5px 0px;
+        font-size: 15px;
+        color: #333;
+
+    }
+    .back .rating-title{
+        margin: 10px 0px 5px 0px;
+        font-size:13px;
+        color: #333;
+
+
+    }
+    .back .desc-body{
+        font-size: 12px;
+        color: #666666;
+    }
+    .back .love{
+        right: 0px;
+        top: 0px;
+        margin-right: 21px;
+        margin-top: 18px;
+        position: absolute;
+        /* bottom: 22px; */
+        /* left: 20px; */
+        width: 21px;
+        height: 23px;
+        /* padding: .83em; */
+        -webkit-transform: scale(.9);
+    }
+    .back .desc-container{
+        margin: 0px 10px;
+        float:left;
+    }
+
+    .rating_revire{
+        margin-top: 5px;
+        font-size: 10px;
+        color: #666666;
+    }
+    .review_content{
+        margin-top: 5px;
+        font-size:12px;
+        color: #666666;
+
+    }
+
+
+    .imgactive{
+        -webkit-transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        -webkit-transform: scale(1.2);
+
+    }
+
+    .opacityAnimateShow{
+        -webkit-transition: all 0.3s ease-in-out;
+        opacity: 1;
+    }
+
+    .opacityAnimateHide{
+        -webkit-transition: all 0.3s ease-in-out;
+        opacity: 0;
+    }
+
+    .star {
+        /*background-image: url('http://dl.dropboxusercontent.com/u/11728525/cocaine/icons/new-star.png');*/
+        /*background-repeat: no-repeat; */
+        display: inline-block;
+    }
+
+    .full{
+        background-position: 0 -59px;
+    }
+    .half{
+        background-position: 0 -28px;
+    }
+    .empty{
+        background-position: 0 2px;
+    }
+
+    .smallImg{
+        border: 1px solid white;
+    }
+
+    .scalOpac{
+        -webkit-animation-duration: .5s;
+        -webkit-animation-name: anim;
+        -webkit-animation-iteration-count: 1;
+        -webkit-animation-timing-function: ease-out;
+        /*-webkit-animation-fill-mode: forwards;*/
+
+    }
+
+    @-webkit-keyframes anim{
+
+        0%{
+            -webkit-transform :scale(1);
+            opacity: 1;
+
+        }
+
+        100%{
+            -webkit-transform :scale(1.5);
+            opacity: 0;
+        }
+
+    }
+
+    .shadow{
+        position: absolute;
+        width: 100%;
+        height: 20px;
+        border-radius: 5px;
+
+    }
+    .shadow.one{
+        top: 65px;
+        background-color: #eee;
+        -webkit-transform: scale(0.65);
+
+    }
+    .shadow.two{
+
+        top: 76px;
+        background-color: #ddd;
+        -webkit-transform: scale(0.73);
+
+    }
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body >
+
+<!--div id='banner' ontouchend='expand()'>
+    Check Out The Coolest Apps
+</div-->
+<div style="display:none; position:absolute;" id="im_3432_clickTarget"></div>
+<div id='fullview' ontouchstart='preventDefault(event)'>
+    <!--HEADER-->
+    <div id='header'>
+        <div class="logo">
+        </div>
+
+        <div class="close" onclick='collapse()'>
+            <img src="http://dl.dropboxusercontent.com/u/11728525/cocaine/icons/new-close-button.png"/>
+        </div>
+    </div>
+
+    <!-- CARDS AREA-->
+    <div id="deck_wrapper">
+        <div id="bottomdeck">
+        </div>
+    </div>
+</div>
+
+
+<script>
+var mraidAvail = false;
+
+function collapse(){
+    mraid.close();
+}
+/*function expand(){
+   // alert(1);
+    mraid.setExpandProperties(mraid_getProps());
+    mraid.expand(null);
+ }*/
+function scaffold(){
+    if(currentCard){
+            timeStamp1 = new Date().getTime();
+            var currentFlipper = currentCard.querySelector('.flipper');
+            //currentFlipper.style['-webkit-transform']="rotateY(180deg)";
+            document.querySelector('.shadow.one').style.display ="block";
+            document.querySelector('.shadow.two').style.display ="block";
+            setTimeout(function(){
+
+                currentCard.style.WebkitTransform = 'translate3d(0, -'+ MAIN_HEIGHT+'px,'+maxZ+'px) scale(1)';
+                setTimeout(function(){
+                    currentFlipper.style['-webkit-transform']="rotateY(-200deg)";
+                    setTimeout(function(){
+                            currentFlipper.style['-webkit-transform']="rotateY(0deg)";
+                    },800);
+                },1000);
+                bottomDeck.style.visibility = "visible";
+            }, 500);
+            
+    }
+}
+
+
+
+
+
+
+    
+var data = [];
+
+
+
+//------------------------
+
+    var bodyHeight, bodyWidth;
+    var body = document.body;
+    //var banner  = document.getElementById("banner");
+    var fullViewDiv  = document.getElementById("fullview");
+    var headerDiv = document.getElementById("header");
+    var deckWrapperDiv = document.getElementById("deck_wrapper");
+    var bottomDeck = document.getElementById('bottomdeck');
+    var recordCount = 0;
+    var startCardIndex;// = parseInt((recordCount-1)/2) + 1, idbase = "card-";
+    var totalCount = 0;
+    var storyBoardId = 1;
+    var timeStamp1;
+    function resizeBody(){
+        if(typeof mraidAvail != "undefined" && mraidAvail){
+            var dimensions = mraid.getScreenSize();
+            
+            bodyWidth = dimensions.width;
+            bodyHeight = dimensions.height;
+            
+        }
+        else{
+            bodyWidth = window.innerWidth;
+            bodyHeight = window.innerHeight;
+        }
+        if(bodyWidth >= 320 && bodyHeight<=480){
+            bottomdeck.style.height = "330px";
+            bottomdeck.style.top = "330px";
+            MAIN_HEIGHT = 330;
+            touchIdentifierDistance = 35;
+
+        }
+        else if(bodyHeight===568){
+
+
+            bottomdeck.style.height = "400px";
+            bottomdeck.style.top = "400px";
+            MAIN_HEIGHT = 400;
+            touchIdentifierDistance = 35;
+        }
+        else if(bodyHeight===640){
+            // alert("Reached 3 ");
+            bottomdeck.style.height = "480px";
+            bottomdeck.style.top = "490px";
+            MAIN_HEIGHT = 490;
+        }
+        body.style.width = deckWrapperDiv.style.width = fullViewDiv.style.width = bodyWidth + "px";
+
+        //fullViewDiv.style.height = bodyHeight + "px";
+
+        deckWrapperDiv.style.height = (bodyHeight ) + "px";
+    }
+        function checkForValidation(obj){
+            if(obj.price === undefined || obj.price == 0){
+                obj.price = "Free";
+            }else{
+                obj.price = '$' + obj.price;
+            }
+            if(obj.name.length > 20){
+                obj.name = obj.name.substr(0,17).concat('...');
+            }
+            if(!obj.tags[0]){
+                obj.tags[0] = "";
+            }
+
+        }
+
+            function renderCard(datasection, append, oldLength){
+                    
+                    var template = document.getElementById("card");
+                    var ele = document.createElement('div');
+                    var items = JSON.stringify(datasection);
+                    items = JSON.parse(items);
+
+                    var templateString = "", item, index, location, cardString="", templateEndString="</div>";
+                   for(var i = 0 ; i < items.length;i++){
+                       checkForValidation(items[i]);
+                     //items[i].name = items[i].name.substr(0,8);
+                    item = items[i];
+
+                    var smallImageString = "";
+
+                    item['background_image'] = item.background_images[0];
+
+
+
+
+                       var star_int = parseInt(item['rating'],10);
+                       var ratingstar = "<span class='star'><div class='five-star'>&#9733;&#9733;&#9733;&#9733;&#9733;</div> <div class='sel-star' style='width:"+(star_int*20)+"%'>&#9733;&#9733;&#9733;&#9733;&#9733;</div> </span>";
+
+//                       if(stars!==parseFloat(0)){
+////                           star_int = star_int -1;
+//                           ratingstar += "<span class = 'star half'>&#9733;</span>"
+//                       }
+
+                       item['ratingstar'] = ratingstar;
+                        
+                        var bgImageString = "", showTransparentImg = true;
+
+                        if(append){
+                            location = "bottom"
+                        }
+                        else{
+                            if(i<=startCardIndex){
+                                location = "top";
+                                if((i == startCardIndex) || (i == getPreviousIndex(startCardIndex) ) ) {
+                                    bgImageString = "background-image: url('"+item.background_image +"');background-repeat:no-repeat";
+                                    showTransparentImg = false ;
+                                }
+                            }
+                            else{
+                                if((i == getNextIndex(startCardIndex)) || (i == getNextIndex(getNextIndex(startCardIndex)) ) ){
+                                   bgImageString = "background-image: url('"+item.background_image +"');background-repeat:no-repeat";
+                                    showTransparentImg = false;
+                                }
+                                location = "bottom";
+                            }
+                        }
+                        var activeimageclass= "";
+                        for(var j = 0;j < item.background_images.length ;j++){
+                           var smallImgURL = "src='" +item.background_images[j] + "'";
+                           activeimageclass= "";
+                           if(j == 0) {
+                                activeimageclass = "imgactive";
+                            }
+                           smallImageString += "<img class='smallImg "+activeimageclass+"' "+smallImgURL+ " ontouchstart='smallImageTouchStart(event,this)'/>";
+                        }
+                        item['smallImgContent'] = smallImageString;
+                       var review_contents="Awesome Game !!! Must Buy !!"
+                       cardString = "<div class='flip-container'> <div class='flipper'> <div class='front'><div class='topContainer'><div class='leftContainer'><div class='appLogo' style='background-image: url("+ item.icon_url+")'></div><div class='appName'>"+ item.name +"</div><div class='smallName'>"+item.publisher+"</div><div class='install'></div><div class='count'>"+item.installs+"</div></div><div class='rightContainer'><div class='rating'>"+ratingstar+"</div><div class='category'>"+item.category+"</div></div></div><div class='middleContainer'><img class='backGround_img' src='"+item.background_image+ "'> <div class='smallImgCont'>"+smallImageString+"</div> </div><div class='bottomContainer'><div class='tag'>"+ item.tags[0] +"</div><div class='price' ontouchend=openInstall('"+item.tracking_url+"',this)>  <span class='app_price'>"+item.price+"</span> </div></div></div><div class='back'> <div class='gradback'> <div class='topContainer'><div class='leftContainer'><div class='appLogo' style='background-image: url("+ item.icon_url+")'></div><div class='appName'>"+ item.name +"</div><div class='smallName'>"+item.publisher+"</div><div class='install'></div><div class='count'>"+item.installs+"</div></div><div class='rightContainer'><div class='rating'>"+ratingstar+"</div><div class='category'>"+item.category+"</div></div></div> <div class='desc-container'> <div class='desc-title'> Description </div> <div class='desc-body'> "+ item.description + " </div> <div class='desc-title'> Reviews </div><div class='rating-title'> 1. Very Nice </div>  <div class='review_rating'><div class='rating_revire'> "+ratingstar + " by Anubhav 12:23:44</div> <div class='review_content'>"+review_contents+"</div> </div>   <div class='rating-title'> 2. Very Nice </div> <div class='review_rating'><div class='rating_revire'> "+ ratingstar + " by Anubhav 12:23:44 </div> <div class='review_content'>"+review_contents+"</div></div>        </div> <div class='price' ontouchend=openInstall('"+item.tracking_url+"',this)>  <span class='app_price'> "+item.price+"</span> </div> </div>  </div> </div> </div>" ;
+                        if(append){
+
+                            var newcard = document.createElement("div");
+
+                            newcard.className = "card";
+                            newcard.setAttribute("id",  idbase +  (oldLength+ i));
+                            //newcard.style.visibility = 'hidden';
+                            newcard.setAttribute("index",   (oldLength+ i));
+                            newcard.setAttribute("data-location",  "bottom");
+                            newcard.setAttribute("data-cat",  item.category);
+                            newcard.setAttribute("ontouchstart",  "deckOnTouchStart(event,this)");
+                            newcard.setAttribute("ontouchend",  "deckOnTouchEnd(event,this)");
+                            newcard.setAttribute("ontouchmove",  "deckOnTouchMove(event,this)");
+
+                            //ontouchend='deckOnTouchEnd(event, this)' ontouchmove='deckOnTouchMove(event, this)'class='card' id='"+ (idbase + i )+"' index="+i+" data-location=" + location+" data-cat="+ item.category + " >" );
+
+                            //debugger;
+                            newcard.innerHTML = cardString;
+                            bottomdeck.appendChild(newcard);
+                        }
+                        else{
+                            //debugger;
+                            templateString += "<div ontouchstart='deckOnTouchStart(event,this)' ontouchend='deckOnTouchEnd(event,this)' ontouchmove='deckOnTouchMove(event,this)'class='card' id='"+ (idbase + i )+"' index="+i+" data-location=" + location+" data-cat="+ item.category + " style='xvisibility:hidden;'>" + cardString + templateEndString;
+                        }
+                        
+
+                        
+
+                        
+
+
+                           
+
+                        
+                
+                       
+                    }
+
+                    if(!append && templateString) bottomDeck.innerHTML = "<div class='dummy'><div class='shadow one'></div><div class='shadow two'></div></div></div>" + templateString;
+                
+            }
+            
+function preventDefault(e){
+    e.preventDefault();
+}
+
+var boxleft,
+    starty,
+    dist = 0, // distance traveled by touch point
+    touchobj = null ;
+
+var currentCard = null;
+var GLOBAL_COUNTE =1;
+
+
+var MAIN_HEIGHT = 360; //Hardocded now
+
+
+var deckLock = null;
+
+var cardsLength, maxCardIndex, minCardIndex;
+var allCards;
+var maxZ = 3;
+var mediumZ = 1;
+var minZ = 0;
+var currentDeckLocation;
+var currentCategory;
+var timeStayed ;
+var storyBoardArr = [];
+var completed = false;
+function getPreviousIndex(index){
+    var prev = index - 1;
+        if(prev < 0){
+            prev =  maxCardIndex;
+        }
+        return  prev;
+}
+
+function getNextIndex(index){
+    var next = index + 1;
+        if(next > maxCardIndex){
+            next =  0;
+        }
+        return next;
+}
+function renderDeck(firstcall){
+
+        allCards = bottomDeck.querySelectorAll(".card");
+        cardsLength = allCards.length;
+        if(cardsLength <= 0) return;
+        minCardIndex = 0;
+        maxCardIndex = cardsLength - 1;
+        if(firstcall){
+            currentCard = allCards[startCardIndex];
+            currentCategory = data[startCardIndex].category;
+            
+        }
+        
+
+    
+}
+function initializeCards(){
+    var currentCardIndex = parseInt(currentCard.getAttribute("index"));
+
+    scaffold();
+
+
+    var nextCard = allCards[getNextIndex(currentCardIndex)];
+    nextCard.style.WebkitTransform = 'translate3d(0, 0px,'+maxZ+'px) scale(.8)';
+
+    var next2nextCard = allCards[getNextIndex(getNextIndex(currentCardIndex))]; 
+    next2nextCard.style.WebkitTransform = 'translate3d(0, 0px,'+mediumZ+'px) scale(.8)';
+
+    var previousCard = allCards[getPreviousIndex(currentCardIndex)]; 
+    previousCard.style.WebkitTransform = 'translate3d(0, -'+ MAIN_HEIGHT+'px,'+mediumZ+'px) scale(1)';   
+
+    //currentCard.style.visibility = 'visible';
+    //previousCard.style.visibility = 'visible';
+    //nextCard.style.visibility = 'visible';
+}
+
+function shuffleCards(){
+
+        var location = currentCard.getAttribute('data-location'),i=0; 
+        var currentCardIndex = parseInt(currentCard.getAttribute("index"));
+        var card;
+        var nextIndex = getNextIndex(currentCardIndex);
+        var prevIndex = getPreviousIndex(currentCardIndex);
+        for(var i=0;i< cardsLength;i++) {
+            card = allCards[i];
+
+            if((i == prevIndex) || (i == nextIndex) || (i == currentCardIndex)){
+                card.style.visibility = 'visible';
+            }
+            else{
+                card.style.visibility = 'hidden';
+            }
+
+        }
+
+        
+
+        var nextCard = allCards[getNextIndex(currentCardIndex)];
+        var next2nextCard = allCards[getNextIndex(getNextIndex(currentCardIndex))]; 
+
+        var previousCard = allCards[getPreviousIndex(currentCardIndex)]; 
+        var prev2prev = allCards[getPreviousIndex(getPreviousIndex(currentCardIndex))];
+
+
+
+        
+
+        if(location == "top"){
+
+
+//            currentCard.style.WebkitTransform = 'translate3d(0px, -'+MAIN_HEIGHT+'px,'+maxZ+'px) scale(1)';
+            //currentCard.setAttribute("data-location", "top");
+
+            currentCard.style.WebkitTransform = 'translate3d(0px, -'+MAIN_HEIGHT+'px,'+maxZ+'px) scale(1)';
+            nextCard.style.WebkitTransform = 'translate3d(0, 0px,'+maxZ+'px) scale(.8)';
+
+
+
+
+            next2nextCard.style.WebkitTransform = 'translate3d(0, 0px,'+mediumZ+'px) scale(.8)';
+            next2nextCard.setAttribute("data-location", "bottom");
+
+//            alert(MAIN_HEIGHT);
+
+            previousCard.style.WebkitTransform = 'translate3d(0, -'+MAIN_HEIGHT+'px,'+mediumZ+'px) scale(1)';
+
+            prev2prev.style.WebkitTransform = "translate3d(0, -"+MAIN_HEIGHT+"px, "+minZ+"px) scale(1)";
+
+
+        
+        }
+        else if(location == 'bottom'){
+
+
+           currentCard.style.WebkitTransform = 'translate3d(0px, 0px,'+maxZ+'px) scale(.8)';
+           //currentCard.setAttribute("data-location", "bottom");
+
+
+            nextCard.style.WebkitTransform = 'translate3d(0px, 0px,'+mediumZ+'px) scale(.8)';
+
+
+
+            prev2prev.style.WebkitTransform = 'translate3d(0, -'+MAIN_HEIGHT+'px,'+mediumZ+'px) scale(1)';
+            prev2prev.setAttribute("data-location", "top");
+
+            previousCard.style.WebkitTransform = 'translate3d(0, -'+MAIN_HEIGHT+'px,'+maxZ+'px) scale(1)';
+
+            next2nextCard.style.WebkitTransform = 'translate3d(0, 0px,'+minZ+'px) scale(.8)';
+        }
+        /*return;
+        cardsLength = allCards.length;
+        if(location == "top"){
+            while(i < cardsLength) {    
+                var card = allCards[i];
+                var index = parseInt(card.getAttribute("index"));
+                
+
+
+                //might break if length is <=3
+                if(i == currentCardIndex){
+                    card.style.visibility =  'visible';
+                    card.style.WebkitTransform = 'translate3d(0, -'+MAIN_HEIGHT+'px,'+maxZ+'px) scale(1)';
+                    
+                }
+                else if(i == getNextIndex(currentCardIndex)){
+                     card.style.visibility =  'visible';
+                     card.style.WebkitTransform = 'translate3d(0, 0px,'+maxZ+'px) scale(.8)';
+                     card.setAttribute("data-location", "bottom");
+                     
+                    
+                }
+                else if( i == getPreviousIndex(currentCardIndex)){
+                    //debugger; 
+                    card.style.WebkitTransform = 'translate3d(0, -'+MAIN_HEIGHT+'px,'+mediumZ+'px) scale(1)';
+                    card.setAttribute("data-location", "top");
+                    card.style.visibility =  'visible';
+                     
+                }
+                else if(i == getNextIndex(getNextIndex(currentCardIndex))){
+                    //card.style.visibility =  'hidden';
+                    card.style.WebkitTransform = 'translate3d(0, 0px,'+mediumZ+'px) scale(.8)';
+                    card.setAttribute("data-location", "bottom");
+                    
+                }
+                else{
+                    card.style.visibility =  'hidden';
+                    //card.style.WebkitTransform = 'translate3d(0, 0px,'+minZ+'px) scale(.8)';
+                    
+                }
+                i++;
+            }
+        }
+        else if( location == "bottom"){
+            while(i < cardsLength) {
+                var card = allCards[i];
+                var index = parseInt(card.getAttribute("index"));
+
+                //might break if length is <=3
+                if(i == currentCardIndex){
+                    card.style.visibility =  'visible';
+                    card.style.WebkitTransform = 'translate3d(0, 0px,'+maxZ+'px) scale(.8)';
+                    
+                }
+                else if(i == getNextIndex(currentCardIndex)){
+                    
+                    card.style.WebkitTransform = 'translate3d(0, 0px,'+mediumZ+'px) scale(.8)';
+                    card.setAttribute("data-location", "bottom");
+                    card.style.visibility =  'visible';
+                    
+                }
+                else if( i == getPreviousIndex(currentCardIndex)){
+                    
+                    card.style.WebkitTransform = 'translate3d(0, -'+MAIN_HEIGHT+'px,'+maxZ+'px) scale(1)';
+                    card.setAttribute("data-location", "top");
+                    card.style.visibility =  'visible';
+                   
+                }
+                else if(i == getPreviousIndex(getPreviousIndex(currentCardIndex))){
+                    //card.style.visibility =  'hidden';
+                    card.style.WebkitTransform = 'translate3d(0, -'+MAIN_HEIGHT+'px,'+mediumZ+'px) scale(1)';
+                    card.setAttribute("data-location", "top");
+                   
+                }
+                else{
+                    card.style.visibility =  'hidden';
+                    //card.style.WebkitTransform = 'translate3d(0, 0px,'+minZ+'px) scale(.8)';
+                   
+                }
+                i=i+1;
+            }
+        }*/
+           
+
+        
+
+}
+var touchIdentifierDistance = 20;
+function loadSurroundingImages(cardObj){
+    var index = parseInt(cardObj.getAttribute('index'));
+    var prevIndex = getPreviousIndex(getPreviousIndex(index));
+    var nextIndex = getNextIndex(getNextIndex(index));
+    var previousFront = allCards[prevIndex].querySelector(".middleContainer img");
+    var previousBack = allCards[prevIndex].querySelector(".back");
+
+    var nextFront = allCards[nextIndex].querySelector(".middleContainer img");
+    var nextBack = allCards[nextIndex].querySelector(".back");
+    //debugger;
+    var next = allCards[nextIndex];
+
+    if(!previousFront.style.backgroundImage){
+          previousFront.src =  data[prevIndex]["background_images"][0] ;
+        //previousFront.style.backgroundImage =  "url('"+front-bg-img.png +"')" ; //front-bg-img.png   "url(" + data[prevIndex]["background_images"][0] + ")";
+       
+       // previousFront.style.backgroundRepeat = "no-repeat";
+       // previousBack.style.backgroundImage ="url('"+front-bg-img.png +"')" ;// "url(" + data[prevIndex]["background_images"][0] + ")";
+        
+        previousBack.style.backgroundRepeat = "no-repeat";
+        var smallImages = previousFront.querySelectorAll("img[imgsource]"),smallImage;
+        for(var k=0;k<smallImages.length;k++){
+            smallImage = smallImages[k];
+            smallImage.setAttribute('src', smallImage.getAttribute('imgsource'));
+        }
+    }
+    if(!nextFront.style.backgroundImage){
+        nextFront.src =  data[prevIndex]["background_images"][0] ;
+       // nextFront.style.backgroundImage = "url('"+front-bg-img.png +"')" ;//"url(" + data[prevIndex]["background_images"][0] + ")";
+       
+        //nextFront.style.backgroundRepeat = "no-repeat";
+       // nextBack.style.backgroundImage = "url('"+front-bg-img.png +"')" ;//"url(" + data[prevIndex]["background_images"][0] + ")";
+        
+        //nextBack.style.backgroundRepeat = "no-repeat";
+        var smallImages = nextFront.querySelectorAll("img[imgsource]"),smallImage;
+        for(var k=0;k<smallImages.length;k++){
+            smallImage = smallImages[k];
+            smallImage.setAttribute('src', smallImage.getAttribute('imgsource'));
+        }
+    }
+}
+function deckOnTouchStart(e, cardObj){
+    e.preventDefault();
+    var index = cardObj.getAttribute("index");
+    
+    
+    deckLock = 0;
+    var location = cardObj.intialLocation = cardObj.getAttribute('data-location');
+    
+    touchobj = e.changedTouches[0] ;
+    cardObj.clientY = parseInt(touchobj.clientY);
+    cardObj.clientX = parseInt(touchobj.clientX);
+    
+
+    currentCard = cardObj;
+    /*var previousCard = allCards[getPreviousIndex(index)]; 
+    var nextCard = allCards[getNextIndex(index)];
+    if(location == "top"){
+        previousCard.style.visibility = 'visible';
+    }
+    else if(location == "bottom"){
+        nextCard.style.visibility = 'visible';
+    }*/
+}
+function deckOnTouchMove(e, cardObj , info,type){
+    if(deckLock === 1){
+        return;
+    }
+    if(info !== undefined){
+        cardObj = document.getElementById("card-"+info);
+
+    }
+        
+        touchobj = e.changedTouches[0];
+        var distV = parseInt(touchobj.clientY) - cardObj.clientY, distH;
+        var location = cardObj.getAttribute("data-location");
+        if(location == "top" || info===1){ //flip + swipedown enabled
+            distH = parseInt(touchobj.clientX) - cardObj.clientX;
+            var currentFlipper = cardObj.querySelector('.flipper');
+            var ind = parseInt(currentCard.getAttribute('index'));
+            if( distH > touchIdentifierDistance  || (info!==undefined && type==="left")){
+                deckLock = 1;
+
+                currentFlipper.style['-webkit-transform']="rotateY(0deg)";
+
+                var currentRorateY = currentFlipper.getAttribute("rotateY") || 0;
+                currentRorateY = parseInt(currentRorateY);
+                var nextRotateY = (currentRorateY-180);
+                currentFlipper.style['-webkit-transform']="rotateY(" + nextRotateY + "deg)";
+                currentFlipper.setAttribute("rotateY", nextRotateY);
+                var deg =  parseInt(currentCard.querySelector('.flipper').getAttribute('rotatey'),10)/180;
+                if(deg%2 !== 0) {
+                    sendHit(99, {"action": "details_show", "label": getCurrentAppDataString(ind)});
+                }
+
+            }
+            else if( distH < -touchIdentifierDistance  || (info!==undefined && type==="right")){
+                deckLock = 1;
+                var currentRorateY = currentFlipper.getAttribute("rotateY") || 0;
+                currentRorateY = parseInt(currentRorateY);
+                var nextRotateY = (currentRorateY + 180);
+                currentFlipper.style['-webkit-transform']="rotateY(" + nextRotateY + "deg)";
+                currentFlipper.setAttribute("rotateY", nextRotateY);
+                var deg =  parseInt(currentCard.querySelector('.flipper').getAttribute('rotatey'),10)/180;
+                if(deg%2 !== 0) {
+                    sendHit(99, {"action": "details_show", "label": getCurrentAppDataString(ind)});
+                }
+
+            
+            }
+            else if( distV > touchIdentifierDistance){
+                deckLock = 1;
+                cardObj.setAttribute('data-location', "bottom");
+
+                shuffleCards();
+                var index = parseInt(cardObj.getAttribute("index"));
+                var category = data[index].category;
+//                if(category != currentCategory){
+//                    currentCategory = category;
+//                    showCategory();
+//                }
+                if (index == (recordCount - 3)){
+                    getData();
+                }
+            }
+            else if( (distV >0) && (distV< touchIdentifierDistance)){
+                cardObj.style.WebkitTransform = 'translate3d(0px, -'+(MAIN_HEIGHT- distV)+'px,'+maxZ+'px) scale(1)';
+            }
+
+
+
+        }
+        else if(location == "bottom"){ //onlyswipe up
+            if(distV < -touchIdentifierDistance){
+                deckLock = 1;
+                cardObj.setAttribute('data-location', "top");
+
+                shuffleCards();
+                var index = parseInt(cardObj.getAttribute("index"));
+                var category = data[index].category;
+//                if(category != currentCategory){
+//                    currentCategory = category;
+//                    showCategory();
+//                }
+                if (index == (recordCount - 3)){
+                    getData();
+                }
+
+            }
+            else if(( distV < 0) && (distV > -touchIdentifierDistance)){
+                //deckLock = 1;
+                //cardObj.setAttribute('data-location', "bottom");
+                
+                cardObj.style.WebkitTransform = 'translate3d(0px, '+(distV)+'px,'+maxZ+'px) scale(.8)';
+            }
+            /*else if(( distV > 0) && (distV <  20)){
+                //deckLock = 1;
+                //cardObj.setAttribute('data-location', "bottom");
+                
+                cardObj.style.WebkitTransform = 'translate3d(0px, '+distV+'px,'+maxZ+'px) scale(.8)';
+            }*/
+            //console.log(distV);
+        }
+        
+        /*return;
+        console.log(distV);
+        console.log(cardObj.clientY);
+        //loadSurroundingImages(cardObj);
+
+        if(location == "top" ){
+            var currentFlipper = cardObj.querySelector('.flipper');
+            if( distV > touchIdentifierDistance){
+                deckLock = 1;
+                cardObj.setAttribute('data-location', "bottom");
+            }
+            else if( distH > touchIdentifierDistance){
+                deckLock = 1;
+                
+                currentFlipper.style['-webkit-transform']="rotateY(0deg)";
+
+                var currentRorateY = currentFlipper.getAttribute("rotateY") || 0;
+                currentRorateY = parseInt(currentRorateY);
+                var nextRotateY = (currentRorateY-180);
+                currentFlipper.style['-webkit-transform']="rotateY(" + nextRotateY + "deg)";
+                currentFlipper.setAttribute("rotateY", nextRotateY);
+            
+            }
+            else{
+                if( distH < -touchIdentifierDistance){
+                deckLock = 1;
+                var currentRorateY = currentFlipper.getAttribute("rotateY") || 0;
+                currentRorateY = parseInt(currentRorateY);
+                var nextRotateY = (currentRorateY + 180);
+                currentFlipper.style['-webkit-transform']="rotateY(" + nextRotateY + "deg)";
+                currentFlipper.setAttribute("rotateY", nextRotateY);
+            
+            
+            }
+            }
+
+            
+        }
+        else if(location == "bottom"){
+
+            if(distV < -touchIdentifierDistance){
+                deckLock = 1;
+                cardObj.setAttribute('data-location', "top");
+            }
+        }*/
+        
+}
+/*function animateBottomCard(card, counter){
+    if(counter > 40) {
+        animateBottomCard1(card, 1);
+        return;
+    }
+    card.style.WebkitTransform = 'translate3d(0px, -'+counter+'px,'+maxZ+'px) scale(.8)';
+    console.log(counter);
+    setTimeout(function(){
+        animateBottomCard(card, (counter+1));
+    }, 10);
+}
+function animateBottomCard1(card, counter){
+    if(counter > 40) return;
+    card.style.WebkitTransform = 'translate3d(0px, '+counter+'px,'+maxZ+'px) scale(.8)';
+    console.log(counter);
+    setTimeout(function(){
+        animateBottomCard(card, (counter+1));
+    }, 10);
+}
+*/
+function calculateTimeStamp(diff,cardObj){
+
+    var ind = parseInt(currentCard.getAttribute('index'));
+    if(cardObj.intialLocation === "bottom") {
+        ind=  getPreviousIndex(ind);
+        sendHit(99, {"action": "card_session", "value": diff, "label": getCurrentAppDataString(ind)});
+    }else if(cardObj.intialLocation === "top"){
+        ind = getNextIndex(ind);
+        sendHit(99, {"action": "card_session", "value": diff, "label": getCurrentAppDataString(ind)})
+    }
+}
+function deckOnTouchEnd(e, cardObj){
+  deckLock = 0;
+  cardObj.finalLocation = cardObj.getAttribute('data-location');
+  var currentCardLocation = cardObj.getAttribute('data-location');
+   if(cardObj.finalLocation != cardObj.intialLocation){
+            loadSurroundingImages(cardObj);
+            var diff = new Date().getTime() - timeStamp1;
+            calculateTimeStamp(diff,cardObj);
+             timeStamp1 = new Date().getTime();
+            /*var index = parseInt(cardObj.getAttribute('index'));
+            var counter = 0;
+            card = allCards[getNextIndex(index)];
+            animateBottomCard(card, 1);*/
+    }
+    else if(currentCardLocation == 'bottom'){
+        cardObj.style.WebkitTransform = 'translate3d(0px, 0px,'+maxZ+'px) scale(.8)';
+    }
+    else if(currentCardLocation == 'top'){
+        cardObj.style.WebkitTransform = 'translate3d(0px, -'+MAIN_HEIGHT+'px,'+maxZ+'px) scale(1)';
+    }
+
+}
+//function showCategory(){
+//    document.getElementById("category_text").innerHTML = currentCategory;
+//}
+
+function hbcb(serverdata){
+    if(serverdata && serverdata.storyboardLength > 0){
+        var oldLength = data.length;
+        data = data.concat(serverdata.storyboard);
+        //debugger;
+        storyBoardArr.push(serverdata.storyboardId);
+        recordCount += serverdata.storyboardLength;
+        startCardIndex = 2, idbase = "card-";
+        completed = serverdata.completed;
+        renderCard(serverdata.storyboard, (storyBoardArr.length !=1 ), oldLength);
+        renderDeck(storyBoardArr.length ===1);
+        showAd();
+    }
+}
+
+
+function getData(){
+    
+    if(completed) return;
+    var script = document.getElementById('datascript');
+    if(!script){
+        script = document.createElement('script');
+        script.setAttribute('async', true);
+        document.body.appendChild(script);
+    }
+    //debugger;
+    var recPerReq = 10;
+    script.src = 'http://heisenberg-server.wc1.inmobi.com/appdata?os=ios&usedSIds='+ storyBoardArr.join(',');
+}
+getData();
+// for multiple image catagery
+
+//---------------------------------------------------------------
+
+function getCurrentAppDataString(index){
+    var currentData = data[index]
+    str = [];
+    str.push(storyBoardId);
+    str.push(currentData.appid);
+    str.push(currentCategory);
+    str.push(index);
+    return str.join(',');
+
+}
+function smallImageTouchStart(event, element){
+   if(deckLock == 1){ return;}
+   if(event.target.src === undefined){
+       return ;
+   }
+   if(currentCard.getAttribute('data-location') == "bottom") return;
+   //currentCard.querySelector('.front').classList.add("opacityAnimateHide");
+   var allImages = currentCard.querySelectorAll(".smallImgCont img");
+   for(var j=0;j<allImages.length;j++){
+        allImages[j].className = allImages[j].className.replace(/imgactive/, "").replace("  ", " ");
+   }
+
+
+   element.className += " imgactive";
+    if(deckLock == 1){ return;}
+       currentCard.querySelector('.middleContainer img').src = event.target.src;
+       sendHit(99,{"action":"thumbnail_click" ,"label":getCurrentAppDataString(parseInt(currentCard.getAttribute('index')))});
+}
+
+
+function openInstall(url, obj){
+    url.replace("$IMP_ID", impId);
+    url.replace("$UID", deviceId);
+    url.replace("$IDA", deviceId);
+    if(deckLock == 1){ return;}
+
+    
+    sendHit(8);
+    setTimeout( function() {
+        if(deckLock == 1){ return;}
+        obj.className += " scalOpac";
+        mraid.openExternal(url);
+        obj.className = obj.className.replace(/scalOpac/g, "").replace("  ", " ");
+    }, 500);
+}
+
+function showAd(){
+
+    fullViewDiv.style.display = 'block';
+    timeStayed = new Date().getTime();
+    sendHit(18);
+    resizeBody();
+    initializeCards();
+
+}
+function onMraidReady() {
+        if (typeof mraid.useCustomClose === "function"){
+            mraid.useCustomClose(true);
+        }
+        //Wait for the ad to become visible for the first time
+        if (typeof mraid.isViewable === "function" && mraid.isViewable()) {
+            showAd();
+        } else {
+            mraid.addEventListener("viewableChange", function(viewable) {
+                if (viewable) {
+                    mraid.removeEventListener("viewableChange", arguments.callee);
+                    showAd();
+                }
+            });
+        }
+    mraid.addEventListener("stateChange", function(state) {
+        if (state == "hidden") {
+
+             timeStayed = (new Date().getTime() - timeStayed)/1000 ;
+                sendHit(3 ,{"secs":timeStayed});
+
+        }
+    });
+    }
+    var count = 0;
+    
+    function checkForMraid() {
+//        count++;
+//        if (4 !== count) {
+//            if ("undefined" !== typeof mraid) {
+//                mraidAvail = true;
+//                if (mraid.getState() === "loading") {
+//                    mraid.addEventListener("ready", onMraidReady);
+//                } else {
+//                    onMraidReady();
+//                }
+//            } else {
+//                setTimeout(checkForMraid, 500);
+//            }
+//        } else {
+//           showAd();
+//        }
+    }
+function sendHit(id, extraParams) {
+    var params = {"spid": "hw-P3YL4Q1JYRZ3eABld","src": "handwritten"};
+    if (id === 99 || id === 3) {
+        for(var key in extraParams) {
+            if(extraParams.hasOwnProperty(key)) {
+                params[key] = extraParams[key];
+            }
+        }
+    } else if (id === 8) {
+        params["cta"] = "exit", params["ctaid"] = "click", params["it"] = "1", params["as"] = "1.0.0";
+    }
+    recordEventFun(id, params);
+}
+
+var impId = "$first.adImpressionId";
+
+function getDeviceId() {
+    var rawHtml = document.documentElement.innerHTML;
+    var regEx = /cocaineId\=(.+)\&extraId\=extraValue/;
+    var matches = regEx.exec(rawHtml),
+            deviceId = "";
+    if(matches && matches.length > 0) {
+        deviceId = matches[1];
+    }
+    return deviceId;
+}
+
+var deviceId = getDeviceId();
+
+
+window['im_3432_recordEvent'] = function(id, params) {
+    var firePixel = function(source, retryTime, times) {
+        if (times <= 0) {
+            return;
+        }
+        var clickTarget = document.getElementById('im_3432_clickTarget');
+        var img = document.createElement('img');
+        img.setAttribute('src', source);
+        img.setAttribute('height', '0');
+        img.setAttribute('width', '2');
+        if (img['addEventListener'] != undefined) {
+            img.addEventListener('error', function() {
+                window.setTimeout(function() {
+                    if (retryTime > 300000) {
+                        retryTime = 300000;
+                    }
+                    firePixel(source, retryTime * 2, times - 1);
+                }, retryTime + Math.random());
+            }, false);
+        }
+        clickTarget.appendChild(img);
+    };
+    var beacon = "http://xyz.inmobi.com/1x1";
+    beacon += "?m=" + id;
+    if (params) {
+        for (var key in params) {
+            beacon += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(params[key]);
+        }
+    }
+    firePixel(beacon, 1000, 5);
+    /*if (id == 18) {
+     window['im_5738_impressionCallback']();
+     }
+     if (id == 8) {
+     window['im_5738_clickCallback'](event);
+     }*/
+};
+var recordEventFun = window["im_3432_recordEvent"];
+
+    checkForMraid();
+sendHit(1);
+</script>
+<script type="text/javascript"  src='http://inmobisdk-a.akamaihd.net/sdk/ios/mraid.js'></script>
+
+</body>
+</html>

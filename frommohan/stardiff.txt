@@ -1,0 +1,65 @@
+--- /Users/ravi.hamsa/git/on-demand-loader/frommohan/template_ios.html	2014-07-10 15:22:43.000000000 +0530
++++ /Users/ravi.hamsa/git/on-demand-loader/frommohan/template_ios_star_implementation.html	2014-07-10 16:05:16.000000000 +0530
+@@ -270,24 +270,20 @@
+         font-size: 11px;
+         position: relative;
+     }
+-    .star.full:before {
+ 
+-        color: #e49f18;
+-        content: '\2605'; /* Full star in UTF-8 */
+-        position: absolute;
+-        float: left;
+-        left: 0;
++    .star .sel-star, .star .five-star{
++        position: relative;
++        top:0;
++        left:0;
+     }
+-    .star.half:before {
+ 
++    .star .sel-star {
+         color: #e49f18;
+-        content: '\2605'; /* Full star in UTF-8 */
+-        position: absolute;
+-        left: 0;
+-        width: 50%;
+-        float: left;
+         overflow: hidden;
++        position: absolute;
+     }
++
++
+     @-moz-document url-prefix() { /* Firefox Hack 😞 */
+         .star{
+             font-size: 50px;
+@@ -772,28 +768,10 @@
+ 
+ 
+ 
+-                       var ratingstar = '';
+-                       var startype = 'full';
+ 
+                        var star_int = parseInt(item['rating'],10);
++                       var ratingstar = "<span class='star'><div class='five-star'>&#9733;&#9733;&#9733;&#9733;&#9733;</div> <div class='sel-star' style='width:"+(star_int*20)+"%'>&#9733;&#9733;&#9733;&#9733;&#9733;</div> </span>";
+ 
+-
+-                       var stars=  parseFloat(item['rating'])-parseFloat(star_int);
+-                       var halfStar = false ;
+-
+-                       for(var j=0;j<5;j++){
+-                           if(j < star_int) {
+-                               ratingstar += "<span class = 'star full'>&#9733;</span>";
+-                           }else{
+-                               if(!halfStar && stars!==parseFloat(0)){
+-                                   halfStar = true;
+-                                   ratingstar += "<span class = 'star half'>&#9733;</span>";
+-                               }else {
+-                                   ratingstar += "<span class = 'star'>&#9733;</span>";
+-                               }
+-                           }
+-
+-                       }
+ //                       if(stars!==parseFloat(0)){
+ ////                           star_int = star_int -1;
+ //                           ratingstar += "<span class = 'star half'>&#9733;</span>"
