@@ -965,7 +965,6 @@
 
     checkForMraid();
     sendHit(1);
-    showAd();
     window.deckOnTouchStart = deckOnTouchStart();
     window.deckOnTouchMove = deckOnTouchMove();
     window.deckOnTouchEnd = deckOnTouchEnd();
